@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /eunsub
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/park?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
+#naming: 엔티티를 만들 때 변수명 그대로 DB에 필드를 만들어 준다.
+#use-new-id: 시퀀스를 어떤식으로 사용할지 방식을 결정하는 것, false: jpa가 사용하는 기본 넘버링 전략을 따라가지 않는다, true:따른다.
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+#jackson: lazy-loading으로 인해 empty-beans이 생길 수 있다. 너그럽게 빈 객체를 허락해주는 옵션

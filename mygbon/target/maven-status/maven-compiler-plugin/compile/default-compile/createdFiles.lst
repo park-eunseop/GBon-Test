@@ -1,0 +1,7 @@
+kr\co\gb\eunsub\model\common\YnType.class
+kr\co\gb\eunsub\test\TestController.class
+kr\co\gb\eunsub\model\user\User.class
+kr\co\gb\eunsub\model\common\ColumnLength.class
+kr\co\gb\eunsub\repository\user\UserRepository.class
+kr\co\gb\eunsub\MyGbonApplication.class
+kr\co\gb\eunsub\validate\NotEmptyString.class

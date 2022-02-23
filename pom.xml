@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.3.RELEASE</version>
+		<relativePath />
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>kr.co.gb</groupId>
+	<artifactId>eunsub</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>eunsub_test</name>
+	<description>maven project test</description>
+
+	<modules>
+		<module>mygbon</module>
+		<module>model_rdb</module>
+		<module>common_backend</module>
+	</modules>
+	<!-- 공용으로 사용될 변수들은 properties에 정의해놓고 가져다 쓰는거야 -->
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+		<spring.boot.version>2.3.3.RELEASE</spring.boot.version>
+		<logback.version>1.2.3</logback.version>
+		<poi.version>4.1.0</poi.version>
+		<bundle.prefix>eunsub</bundle.prefix>
+	</properties>
+	<!-- * scope 종류 1) compile : 컴파일 할때 필요한 것, scope 기본값 2) runtime : runtime할때 
+		필요한 것, 컴파일할때는 필요없지만 실행할때는 필요한것, JDBC 드라이버 같은것. 3) provided : 컴파일때 필요하지만 런타임때는 
+		JDK 혹은 컨테이너가 제공하는것,서블릿이나 JSP 관련 API 같은것. 4) test : 테스트 코드를 컴파일할때 필요하지만 배포때는 
+		제외, easymock, JUnit 같은 것. 5) system : provided와 유사하지만 JAR 파일을 직접 사용, jar파일의 
+		위치를 지정하는 systemPath 엘리먼트가 따라와야한다. -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- provided -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>2.2.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>javax.el-api</artifactId>
+				<version>3.0.0</version>
+				<scope>provided</scope>
+			</dependency>
+
+
+			<!-- Test -->
+			<!-- lightweight 100% java sql database engine -->
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>2.5.0</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- EL(Expression language) el 구문 라이브러리 -->
+			<dependency>
+				<groupId>org.glassfish</groupId>
+				<artifactId>javax.el</artifactId>
+				<version>3.0.0</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- starter for testing spring boot applications with libraries including 
+				JUnit Jupiter, Hamcrest and Mockito -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${spring.boot.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- logging -->
+			<!-- logback-classic module, log4j의 후속 버전, 로그를 분석하는 라이브러리, SLF4J의 API 
+				스펙을 구현 -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>  <!--1.2.3 -->
+			</dependency>
+			<!--logback-classic, logback-core가 필요, logback은 slf4j의 api를 구현하므로 slf4j-api도 
+				필요 -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.7</version>
+			</dependency>
+			<!--Automatic Resource Management,automatic generation of getters,setters,equals, 
+				toString, more! -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.12</version>
+			</dependency>
+
+
+			<!-- apache(commons) -->
+			<!-- Apache Commons Lang : 필요한 유틸리티들을 모아놓은 클래스들의 집합 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.9</version>
+			</dependency>
+			<!--Types that extend and augment the Java Collections Framework., -->
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.2</version>
+			</dependency>
+			<!--This library contains utility classes,stream implementations, ... 
+				필요한 유틸리티들을 모아놓은 클래스들의 집합 -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.7</version>
+			</dependency>
+			<!-- file upload provides multipart file upload functionality -->
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<!-- Java API To Access Microsoft Format Files 4.1.0 마이크로소프트 오피스 파일 포맷을 
+				순수 자바 언어로서 읽고 쓰는 기능을 제공 -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+			<!-- Java API To Access Microsoft Format Files 4.1.0 최근 오피스 포맷인 office 
+				open xml file formats, docx,xlsx,pptx -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+			<!--Apache HttpComponents Client, Http 통신 -->
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.5.13</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpmime</artifactId>
+				<version>4.5.8</version>
+			</dependency>
+
+			<!-- spring framework -->
+			<!-- starter for building web, including restful, applications using spring 
+				MVC -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<!-- starter for using Spring Data JPA with Hibernate -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<!--starter for using spring security -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-security</artifactId>
+				<version>2.3.3.RELEASE</version>
+			</dependency>
+			<!-- Starter for using MongoDB document-oriented database and Spring data 
+				mongoDB -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-mongodb</artifactId>
+				<version>2.6.1</version>
+			</dependency>
+
+			<!-- hibernate -->
+			<!-- Hibernate's core ORM functionality -->
+			<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>5.4.1.Final</version>
+			</dependency>
+
+			<!-- MySQL driver -->
+			<!-- JDBC Type 4 driver for MySQL -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>8.0.14</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- 빌드 정보, plugins: 빌드에서 사용할 플러그인 -->
+	<!-- 메이븐은 플러그인을 구동해주는 프레임워크, 모든 작업은 플러그인에서 수행 -->
+	<!-- 메이븐은 여러 플러그인으로 구성되어 있으며, 각각의 플러그인은 하나 이상의 goal(명령,작업)을 포함하고 있다. -->
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.bsc.maven</groupId>
+					<artifactId>maven-processor-plugin</artifactId>
+					<version>5.0-rc3</version>
+					<executions>
+						<execution>
+							<id>process</id>
+							<goals>
+								<goal>process</goal>
+							</goals>
+							<phase>generate-sources</phase>
+							<configuration>
+								<processors>
+									<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+								</processors>
+							</configuration>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+							<version>5.6.3.Final</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.2</version>
+					<configuration>
+						<argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine> <!--매개변수에 값 추가 -->
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>  <!--UTF-8 인코딩사용 -->
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.1.0</version>
+					<executions>
+						<execution>
+							<id>generateJavaDoc</id>
+							<goals>
+								<goal>javadoc</goal>
+							</goals>
+							<phase>package</phase>
+						</execution>
+					</executions>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<show>private</show>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
